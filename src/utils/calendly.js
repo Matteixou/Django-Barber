@@ -1,9 +1,7 @@
-// ── Remplace cette URL par ton lien Calendly après création de compte ──
-// Crée ton compte sur https://calendly.com → copie ton lien de profil ici
-export const CALENDLY_URL = 'https://calendly.com/matthieu94f/reservation-coupe'
+export const CALENDLY_URL = import.meta.env.VITE_CALENDLY_URL
 
 export function openCalendly() {
-  if (window.Calendly) {
+  if (window.Calendly && CALENDLY_URL) {
     window.Calendly.initPopupWidget({ url: CALENDLY_URL })
   }
 }
