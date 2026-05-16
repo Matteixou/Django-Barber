@@ -1,21 +1,22 @@
 import './App.css'
-import { useState } from 'react'
+import { useState, lazy, Suspense } from 'react'
 import { useLenis } from './hooks/useLenis'
-import Navbar        from './components/Navbar'
-import Hero          from './components/Hero'
-import Marquee       from './components/Marquee'
-import About         from './components/About'
-import Stats         from './components/Stats'
-import Skills        from './components/Skills'
-import Pricing       from './components/Pricing'
-import Gallery       from './components/Gallery'
-import Experience    from './components/Experience'
-import GoogleReviews from './components/GoogleReviews'
-import Contact       from './components/Contact'
-import Footer        from './components/Footer'
-import Cursor        from './components/Cursor'
-import Preloader     from './components/Preloader'
-import Grain         from './components/Grain'
+import Navbar    from './components/Navbar'
+import Hero      from './components/Hero'
+import Cursor    from './components/Cursor'
+import Preloader from './components/Preloader'
+import Grain     from './components/Grain'
+
+const Marquee       = lazy(() => import('./components/Marquee'))
+const About         = lazy(() => import('./components/About'))
+const Stats         = lazy(() => import('./components/Stats'))
+const Skills        = lazy(() => import('./components/Skills'))
+const Gallery       = lazy(() => import('./components/Gallery'))
+const Experience    = lazy(() => import('./components/Experience'))
+const GoogleReviews = lazy(() => import('./components/GoogleReviews'))
+const Pricing       = lazy(() => import('./components/Pricing'))
+const Contact       = lazy(() => import('./components/Contact'))
+const Footer        = lazy(() => import('./components/Footer'))
 
 export default function App() {
   const [ready, setReady] = useState(false)
@@ -29,17 +30,19 @@ export default function App() {
         <Cursor />
         <Navbar />
         <Hero />
-        <Marquee />
-        <About />
-        <Stats />
-        <Skills />
-        <Marquee inverted />
-        <Gallery />
-        <Experience />
-        <GoogleReviews />
-        <Pricing />
-        <Contact />
-        <Footer />
+        <Suspense fallback={null}>
+          <Marquee />
+          <About />
+          <Stats />
+          <Skills />
+          <Marquee inverted />
+          <Gallery />
+          <Experience />
+          <GoogleReviews />
+          <Pricing />
+          <Contact />
+          <Footer />
+        </Suspense>
       </div>
     </>
   )
