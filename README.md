@@ -4,76 +4,36 @@ Site web professionnel pour **Django Barber**, salon de coiffure situé au **9 r
 
 ---
 
-## 🔑 Configuration des Avis Google (IMPORTANT)
+## Stack technique
 
-Le site affiche automatiquement les vrais avis Google du salon. Pour que cela fonctionne, il faut configurer une clé API Google. Cette procédure est à effectuer **une seule fois**, par le propriétaire du salon.
-
-### Étape 1 — Se connecter à Google Cloud
-
-1. Ouvrir le navigateur et aller sur : **https://console.cloud.google.com**
-2. Se connecter avec le **compte Google du propriétaire du salon** (le même que celui utilisé pour Google My Business)
-
----
-
-### Étape 2 — Créer un projet
-
-1. En haut de la page, cliquer sur le menu déroulant à côté de "Google Cloud"
-2. Cliquer sur **"Nouveau projet"**
-3. Donner un nom au projet, par exemple : `Django Barber Site`
-4. Cliquer sur **"Créer"** et attendre quelques secondes
+- **React + Vite** — Framework et bundler
+- **GSAP + ScrollTrigger** — Animations au scroll
+- **Three.js / React Three Fiber** — Modèle 3D interactif (Hero)
+- **motion/react** — Animations de popups
+- **Tailwind CSS v4** — Styles utilitaires
+- **Lenis** — Smooth scroll
+- **SplitType** — Animations de texte lettre par lettre
+- **Calendly Widget** — Prise de rendez-vous en ligne
 
 ---
 
-### Étape 3 — Activer les APIs nécessaires
+## Variables d'environnement
 
-1. Dans le menu de gauche, cliquer sur **"APIs et services"** → **"Bibliothèque"**
-2. Dans la barre de recherche, taper `Maps JavaScript API`
-   - Cliquer sur le résultat → Cliquer sur **"Activer"**
-3. Revenir à la bibliothèque, taper `Places API`
-   - Cliquer sur le résultat → Cliquer sur **"Activer"**
-
----
-
-### Étape 4 — Créer la clé API
-
-1. Dans le menu de gauche, cliquer sur **"APIs et services"** → **"Identifiants"**
-2. En haut, cliquer sur **"+ Créer des identifiants"** → **"Clé API"**
-3. Une clé s'affiche (elle ressemble à `AIzaSy...`). **La copier**.
-
----
-
-### Étape 5 — Sécuriser la clé (recommandé)
-
-1. Cliquer sur **"Modifier la clé"**
-2. Dans la section **"Restrictions relatives aux applications"** :
-   - Sélectionner **"Referrers HTTP (sites web)"**
-   - Ajouter les adresses suivantes :
-     - `localhost:5173/*` *(pour les tests en local)*
-     - `www.votre-domaine.fr/*` *(remplacer par le vrai domaine du site)*
-3. Cliquer sur **"Enregistrer"**
-
----
-
-### Étape 6 — Renseigner la clé dans le projet
-
-Ouvrir le fichier `.env` à la racine du projet et remplacer les valeurs :
+Créer un fichier `.env` à la racine du projet :
 
 ```
-VITE_GOOGLE_API_KEY=AIzaSy...votre_vraie_clé_ici
+VITE_GOOGLE_API_KEY=AIzaSy...votre_clé_ici
 VITE_PLACE_ID=ChIJ93-YLf1z5kcRP4gk5EMCA94
+VITE_CALENDLY_URL=https://calendly.com/votre-username/reservation-coupe
 ```
 
-> ⚠️ **Ne jamais partager ce fichier `.env` publiquement** (ne pas le mettre sur GitHub, ne pas l'envoyer par email).
+> ⚠️ Ne jamais commiter le fichier `.env` — il est protégé par le `.gitignore`.
+
+Sur **Vercel**, ajouter ces trois variables dans **Settings → Environment Variables**.
 
 ---
 
-### C'est gratuit ?
-
-Oui. Google offre **28 500 chargements gratuits par mois**, ce qui est largement suffisant pour un salon de coiffure. Au-delà, Google demande une carte bancaire, mais il faudrait des dizaines de milliers de visiteurs par mois pour dépasser ce seuil.
-
----
-
-## 🚀 Lancer le site en local (pour le développeur)
+## Lancer le projet en local
 
 ```bash
 npm install
@@ -84,41 +44,75 @@ Le site s'ouvre sur : **http://localhost:5173**
 
 ---
 
-## 🏗️ Construire le site pour la mise en ligne
+## Build de production
 
 ```bash
 npm run build
 ```
 
-Les fichiers à déployer se trouvent dans le dossier `dist/`.
+Les fichiers compilés se trouvent dans le dossier `dist/`.
 
 ---
 
-## 📁 Structure du projet
+## Structure du projet
 
 ```
 src/
 ├── components/
-│   ├── Navbar.jsx          → Barre de navigation
-│   ├── Hero.jsx            → Page d'accueil (modèle 3D)
-│   ├── About.jsx           → Section "À propos"
+│   ├── Navbar.jsx          → Barre de navigation fixe + menu mobile
+│   ├── Preloader.jsx       → Écran de chargement animé
+│   ├── Hero.jsx            → Page d'accueil avec modèle 3D
+│   ├── Marquee.jsx         → Bande de texte défilant
+│   ├── About.jsx           → Section "Notre histoire"
+│   ├── Stats.jsx           → Chiffres clés animés
 │   ├── Skills.jsx          → Section "Savoir-faire"
-│   ├── Gallery.jsx         → Galerie photos
-│   ├── Experience.jsx      → Expérience & témoignages
+│   ├── Gallery.jsx         → Galerie photos avec lightbox
+│   ├── Experience.jsx      → Section "L'expérience Django"
 │   ├── GoogleReviews.jsx   → Avis Google en temps réel
-│   ├── Contact.jsx         → Coordonnées & contact
-│   └── Footer.jsx          → Pied de page
-└── hooks/
-    └── useLenis.js         → Animation de défilement fluide
+│   ├── Pricing.jsx         → Section tarifs
+│   ├── Contact.jsx         → Contact, adresse & horaires
+│   ├── Footer.jsx          → Pied de page
+│   ├── Cursor.jsx          → Curseur personnalisé
+│   ├── Grain.jsx           → Texture grain overlay
+│   └── MagneticButton.jsx  → Bouton à effet magnétique
+├── icons/
+│   └── SocialIcons.jsx     → Icônes réseaux sociaux (Instagram, Snapchat, TikTok)
+├── hooks/
+│   └── useLenis.js         → Smooth scroll
+└── utils/
+    └── calendly.js         → Intégration Calendly (RDV en ligne)
 ```
 
 ---
 
-## 📍 Informations du salon
+## Configuration Google Reviews
+
+1. Aller sur [console.cloud.google.com](https://console.cloud.google.com)
+2. Créer un projet → activer **Maps JavaScript API** et **Places API**
+3. Créer une clé API → la restreindre à ton domaine
+4. Renseigner `VITE_GOOGLE_API_KEY` et `VITE_PLACE_ID` dans le `.env`
+
+> Google offre 200$/mois de crédit gratuit — largement suffisant pour un salon de coiffure.
+
+---
+
+## Configuration Calendly
+
+1. Créer un compte sur [calendly.com](https://calendly.com)
+2. Créer un événement "En privé" (ex: Coupe — 30 min)
+3. Copier le lien de l'événement
+4. Le renseigner dans `VITE_CALENDLY_URL` du `.env`
+
+Les disponibilités se gèrent directement depuis l'app Calendly, sans toucher au code.
+
+---
+
+## Informations du salon
 
 | | |
 |---|---|
 | **Nom** | Django Barber |
 | **Adresse** | 9 rue Gaston Cantini, 94800 Villejuif |
 | **Instagram** | [@niame___](https://www.instagram.com/niame___/) |
-| **Place ID Google** | `ChIJ93-YLf1z5kcRP4gk5EMCA94` |
+| **Snapchat** | [@niame_iss](https://www.snapchat.com/add/niame_iss) |
+| **TikTok** | [@django94200](https://www.tiktok.com/@django94200) |
