@@ -1,4 +1,7 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, lazy, Suspense } from 'react'
+import FloatingParticles from './FloatingParticles'
+
+const ContactBg3D = lazy(() => import('./ContactBg3D'))
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { MapPin, X, CalendarDays, Clock } from 'lucide-react'
@@ -226,6 +229,7 @@ export default function Contact() {
   const sectionRef  = useRef(null)
   const heroRef     = useRef(null)
   const cardsRef    = useRef(null)
+  const bg3dRef     = useRef(null)
   const [showSocial, setShowSocial] = useState(false)
 
   useEffect(() => {
@@ -246,13 +250,28 @@ export default function Contact() {
         opacity: 0, y: 40, stagger: 0.1, duration: 0.8, ease: 'power3.out',
         scrollTrigger: { trigger: cardsRef.current, start: 'top 85%' },
       })
+      gsap.to(bg3dRef.current, {
+        opacity: 0.22, duration: 2, ease: 'power2.out',
+        scrollTrigger: { trigger: sectionRef.current, start: 'top 65%', once: true },
+      })
     }, sectionRef)
     return () => ctx.revert()
   }, [])
 
   return (
-    <section ref={sectionRef} id="contact" className="section-pad" style={{ width: '100%', background: '#0a0a0a' }}>
-      <div className="wrap">
+    <section ref={sectionRef} id="contact" className="section-pad" style={{ width: '100%', background: '#0a0a0a', position: 'relative', overflow: 'hidden' }}>
+
+      {/* Fond 3D — apparaît au scroll derrière les cartes */}
+      <div ref={bg3dRef} style={{ position: 'absolute', inset: 0, zIndex: 0, opacity: 0, pointerEvents: 'none' }}>
+        <Suspense fallback={null}>
+          <ContactBg3D />
+        </Suspense>
+      </div>
+
+      {/* Icônes flottantes */}
+      <FloatingParticles />
+
+      <div className="wrap" style={{ position: 'relative', zIndex: 1 }}>
 
         {/* CTA hero */}
         <div ref={heroRef} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', marginBottom: '5rem' }}>

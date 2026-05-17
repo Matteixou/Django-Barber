@@ -2,6 +2,11 @@
 
 @import "tailwindcss";
 
+@keyframes float-particle {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-22px); }
+}
+
 /* ─── Reset total ─── */
 *, *::before, *::after {
   margin: 0;

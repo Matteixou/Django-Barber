@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import FloatingParticles from './FloatingParticles'
 import { Scissors, Zap, Star, Sparkles, MessageCircle, TrendingUp } from 'lucide-react'
 import SplitType from 'split-type'
 
@@ -71,8 +72,9 @@ export default function Skills() {
   }, [])
 
   return (
-    <section ref={sectionRef} id="skills" className="section-pad" style={{ width: '100%', background: '#0a0a0a' }}>
-      <div className="wrap">
+    <section ref={sectionRef} id="skills" className="section-pad" style={{ width: '100%', background: '#0a0a0a', position: 'relative', overflow: 'hidden' }}>
+      <FloatingParticles count={30} />
+      <div className="wrap" style={{ position: 'relative', zIndex: 1 }}>
 
         <div ref={headerRef} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', marginBottom: '4rem' }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.75rem', marginBottom: '1.25rem' }}>

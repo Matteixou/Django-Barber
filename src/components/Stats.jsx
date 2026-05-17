@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import FloatingParticles from './FloatingParticles'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -48,8 +49,10 @@ export default function Stats() {
       width: '100%', background: '#0a0a0a',
       padding: '4.5rem 0',
       borderTop: '1px solid rgba(255,255,255,0.06)', borderBottom: '1px solid rgba(255,255,255,0.06)',
+      position: 'relative', overflow: 'hidden',
     }}>
-      <div className="wrap">
+      <FloatingParticles count={20} />
+      <div className="wrap" style={{ position: 'relative', zIndex: 1 }}>
         <div className="grid-stats">
           {STATS.map((stat, i) => (
             <div key={stat.label} className="stat-item" style={{ textAlign: 'center' }}>
