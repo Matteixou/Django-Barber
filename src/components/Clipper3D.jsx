@@ -1,7 +1,6 @@
 import { useRef, useMemo, useEffect } from 'react'
 import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
-import { useIsMobile } from '../hooks/useIsMobile'
 
 function useStripeTexture() {
   return useMemo(() => {
@@ -49,7 +48,6 @@ function useStripeTexture() {
 }
 
 function BarberPole() {
-  const isMobile      = useIsMobile()
   const cylinderRef   = useRef()
   const stripeTexture = useStripeTexture()
 
@@ -85,19 +83,17 @@ function BarberPole() {
         <meshPhysicalMaterial map={stripeTexture} roughness={0.28} metalness={0.04} envMapIntensity={0.6} />
       </mesh>
 
-      {/* ══ Glass side panels — desktop uniquement (transparence coûteuse) ══ */}
-      {!isMobile && <>
-        <mesh position={[-0.42, 0, 0]}>
-          <boxGeometry args={[0.045, 2.40, 0.12]} />
-          <meshPhysicalMaterial color="#a8ddd6" roughness={0.04} metalness={0.0}
-            transparent opacity={0.55} envMapIntensity={1.8} />
-        </mesh>
-        <mesh position={[0.42, 0, 0]}>
-          <boxGeometry args={[0.045, 2.40, 0.12]} />
-          <meshPhysicalMaterial color="#a8ddd6" roughness={0.04} metalness={0.0}
-            transparent opacity={0.55} envMapIntensity={1.8} />
-        </mesh>
-      </>}
+      {/* ══ Glass side panels ══ */}
+      <mesh position={[-0.42, 0, 0]}>
+        <boxGeometry args={[0.045, 2.40, 0.12]} />
+        <meshPhysicalMaterial color="#a8ddd6" roughness={0.04} metalness={0.0}
+          transparent opacity={0.55} envMapIntensity={1.8} />
+      </mesh>
+      <mesh position={[0.42, 0, 0]}>
+        <boxGeometry args={[0.045, 2.40, 0.12]} />
+        <meshPhysicalMaterial color="#a8ddd6" roughness={0.04} metalness={0.0}
+          transparent opacity={0.55} envMapIntensity={1.8} />
+      </mesh>
 
       {/* ══ Bottom narrow separator ══ */}
       <mesh position={[0, -1.22, 0]}>
@@ -137,7 +133,6 @@ export default function Clipper3D() {
   useFrame((state) => {
     const t = state.clock.elapsedTime
 
-    // Lerp scale : 1.0 au top → 4.0 en bas du hero
     const targetScale = 1 + scrollRef.current * 3.0
     scaleRef.current += (targetScale - scaleRef.current) * 0.07
 
