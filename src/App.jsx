@@ -13,7 +13,6 @@ const Stats         = lazy(() => import('./components/Stats'))
 const Skills        = lazy(() => import('./components/Skills'))
 const Gallery       = lazy(() => import('./components/Gallery'))
 const Experience    = lazy(() => import('./components/Experience'))
-const GoogleReviews = lazy(() => import('./components/GoogleReviews'))
 const Pricing       = lazy(() => import('./components/Pricing'))
 const Contact       = lazy(() => import('./components/Contact'))
 const Footer        = lazy(() => import('./components/Footer'))
@@ -38,7 +37,6 @@ export default function App() {
           <Marquee inverted />
           <Gallery />
           <Experience />
-          <GoogleReviews />
           <Pricing />
           <Contact />
           <Footer />
