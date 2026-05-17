@@ -214,8 +214,8 @@ const CARDS = [
   },
   {
     label:   'Horaires',
-    accent:  { r: 124, g: 58,  b: 237 },
-    badge:   { bg: 'linear-gradient(135deg, #7c3aed, #5b21b6)', shadow: 'rgba(124,58,237,0.4)', Icon: Clock,         iconSize: 16, iconColor: '#fff' },
+    accent:  { r: 255, g: 255, b: 255 },
+    badge:   { bg: 'linear-gradient(135deg, #444, #222)', shadow: 'rgba(255,255,255,0.25)', Icon: Clock, iconSize: 16, iconColor: '#fff' },
     Content: HoursContent,
   },
 ]

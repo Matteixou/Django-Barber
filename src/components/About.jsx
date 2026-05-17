@@ -116,7 +116,7 @@ export default function About() {
                 'Une relation de confiance durable avec chaque client',
               ].map((text) => (
                 <div key={text} style={{ display: 'flex', alignItems: 'flex-start', gap: '0.75rem' }}>
-                  <span style={{ width: '5px', height: '5px', borderRadius: '50%', background: '#0a0a0a', marginTop: '0.45rem', flexShrink: 0 }} />
+                  <span style={{ fontSize: '1rem', flexShrink: 0, lineHeight: 1 }}>💈</span>
                   <p style={{ color: '#666', fontSize: '0.875rem', lineHeight: 1.7 }}>{text}</p>
                 </div>
               ))}
