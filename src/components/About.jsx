@@ -78,8 +78,8 @@ export default function About() {
             <div style={{ borderRadius: '1rem', overflow: 'hidden', aspectRatio: '4/5' }}>
               <img
                 ref={imgInnerRef}
-                src="https://images.unsplash.com/photo-1621605815971-fbc98d665033?w=800&q=80"
-                alt="Django Barber"
+                src="/StudioDjango.jpg"
+                alt="Studio Django Barber"
                 style={{ width: '100%', height: '115%', objectFit: 'cover', marginTop: '-7.5%' }}
               />
             </div>
