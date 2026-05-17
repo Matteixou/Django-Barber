@@ -93,7 +93,7 @@ export default function Hero() {
       {/* ── Icônes flottantes ── */}
       <FloatingParticles />
 
-      {/* ── COUCHE 2 : Canvas 3D (devant tout) ── */}
+      {/* ── COUCHE 2 : Canvas 3D ── */}
       <div style={{ position: 'absolute', inset: 0, zIndex: 2, pointerEvents: 'none' }}>
         <Suspense fallback={null}>
           <Hero3D />

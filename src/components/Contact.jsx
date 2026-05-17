@@ -262,7 +262,7 @@ export default function Contact() {
   return (
     <section ref={sectionRef} id="contact" className="section-pad" style={{ width: '100%', background: '#0a0a0a', position: 'relative', overflow: 'hidden' }}>
 
-      {/* Fond 3D — apparaît au scroll derrière les cartes */}
+      {/* Fond 3D */}
       <div ref={bg3dRef} style={{ position: 'absolute', inset: 0, zIndex: 0, opacity: 0, pointerEvents: 'none' }}>
         <Suspense fallback={null}>
           <ContactBg3D />
