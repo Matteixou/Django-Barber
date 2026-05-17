@@ -6,10 +6,10 @@ Site web professionnel pour **Django Barber**, salon de coiffure situé au **9 r
 
 ## Stack technique
 
-- **React + Vite** — Framework et bundler
+- **React + Vite** — Framework et bundler (code splitting + lazy loading)
 - **GSAP + ScrollTrigger** — Animations au scroll
-- **Three.js / React Three Fiber** — Modèle 3D interactif (Hero)
-- **motion/react** — Animations de popups
+- **Three.js / React Three Fiber** — Modèle 3D Hero + fond animé Contact
+- **motion/react** — Animations du preloader
 - **Tailwind CSS v4** — Styles utilitaires
 - **Lenis** — Smooth scroll
 - **SplitType** — Animations de texte lettre par lettre
@@ -22,14 +22,12 @@ Site web professionnel pour **Django Barber**, salon de coiffure situé au **9 r
 Créer un fichier `.env` à la racine du projet :
 
 ```
-VITE_GOOGLE_API_KEY=AIzaSy...votre_clé_ici
-VITE_PLACE_ID=ChIJ93-YLf1z5kcRP4gk5EMCA94
 VITE_CALENDLY_URL=https://calendly.com/votre-username/reservation-coupe
 ```
 
 > ⚠️ Ne jamais commiter le fichier `.env` — il est protégé par le `.gitignore`.
 
-Sur **Vercel**, ajouter ces trois variables dans **Settings → Environment Variables**.
+Sur **Vercel**, ajouter cette variable dans **Settings → Environment Variables**.
 
 ---
 
@@ -60,17 +58,20 @@ Les fichiers compilés se trouvent dans le dossier `dist/`.
 src/
 ├── components/
 │   ├── Navbar.jsx          → Barre de navigation fixe + menu mobile
-│   ├── Preloader.jsx       → Écran de chargement animé
+│   ├── Preloader.jsx       → Écran de chargement animé (poteau barbier)
 │   ├── Hero.jsx            → Page d'accueil avec modèle 3D
+│   ├── Hero3D.jsx          → Canvas Three.js isolé (lazy loaded)
 │   ├── Marquee.jsx         → Bande de texte défilant
 │   ├── About.jsx           → Section "Notre histoire"
 │   ├── Stats.jsx           → Chiffres clés animés
 │   ├── Skills.jsx          → Section "Savoir-faire"
 │   ├── Gallery.jsx         → Galerie photos avec lightbox
 │   ├── Experience.jsx      → Section "L'expérience Django"
-│   ├── GoogleReviews.jsx   → Avis Google en temps réel
-│   ├── Pricing.jsx         → Section tarifs
+│   ├── Pricing.jsx         → Section tarifs (Coupe + Barbe / Sur devis)
 │   ├── Contact.jsx         → Contact, adresse & horaires
+│   ├── ContactBg3D.jsx     → Fond 3D animé de la section Contact (lazy loaded)
+│   ├── FloatingParticles.jsx → Icônes SVG flottantes (colonnes gauche/droite)
+│   ├── BarberIcons.jsx     → SVGs barber partagés (Scissors, Comb, Clipper, Razor, Brush)
 │   ├── Footer.jsx          → Pied de page
 │   ├── Cursor.jsx          → Curseur personnalisé
 │   ├── Grain.jsx           → Texture grain overlay
@@ -82,17 +83,6 @@ src/
 └── utils/
     └── calendly.js         → Intégration Calendly (RDV en ligne)
 ```
-
----
-
-## Configuration Google Reviews
-
-1. Aller sur [console.cloud.google.com](https://console.cloud.google.com)
-2. Créer un projet → activer **Maps JavaScript API** et **Places API**
-3. Créer une clé API → la restreindre à ton domaine
-4. Renseigner `VITE_GOOGLE_API_KEY` et `VITE_PLACE_ID` dans le `.env`
-
-> Google offre 200$/mois de crédit gratuit — largement suffisant pour un salon de coiffure.
 
 ---
 
