@@ -1,8 +1,9 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { motion, AnimatePresence } from 'motion/react'
 import { Menu, X } from 'lucide-react'
 import { openCalendly } from '../utils/calendly'
 import { InstagramIcon, SnapchatIcon, TikTokIcon } from '../icons/SocialIcons'
+import { INSTAGRAM_URL, SNAPCHAT_URL, TIKTOK_URL } from '../constants/socialLinks'
 
 const links = [
   { label: 'À propos',     href: '#about' },
@@ -35,17 +36,16 @@ export default function Navbar() {
     return () => { document.body.style.overflow = '' }
   }, [open])
 
-  // Style de la barre selon contexte
-  const navStyle = (() => {
+  const navStyle = useMemo(() => {
     if (isMobile) {
-      if (open)    return { background: 'transparent', padding: '0.75rem 0' }
+      if (open)     return { background: 'transparent', padding: '0.75rem 0' }
       if (scrolled) return { background: 'rgba(255,255,255,0.95)', borderBottom: '1px solid #ebebeb', padding: '0.75rem 0', boxShadow: '0 1px 20px rgba(0,0,0,0.05)' }
       return { background: 'rgba(5,7,13,0.55)', padding: '0.75rem 0' }
     }
-    if (open)    return { background: '#0a0a0a', borderBottom: '1px solid rgba(255,255,255,0.08)', padding: '0.75rem 0' }
+    if (open)     return { background: '#0a0a0a', borderBottom: '1px solid rgba(255,255,255,0.08)', padding: '0.75rem 0' }
     if (scrolled) return { background: 'rgba(255,255,255,0.92)', borderBottom: '1px solid #ebebeb', padding: '0.75rem 0', boxShadow: '0 1px 20px rgba(0,0,0,0.05)' }
     return { background: 'transparent', padding: '1.25rem 0' }
-  })()
+  }, [isMobile, open, scrolled])
 
   const logoFilter = (isMobile && scrolled && !open) ? 'none' : open || (isMobile && !scrolled) ? 'brightness(0) invert(1)' : 'none'
   const hamburgerColor = (isMobile && scrolled && !open) ? '#0a0a0a' : '#fff'
@@ -113,7 +113,7 @@ export default function Navbar() {
 
           {/* Bouton Réserver desktop */}
           {!isMobile && (
-            <button onClick={openCalendly} className="btn-dark" style={{ padding: '0.6rem 1.5rem', border: 'none', cursor: 'pointer' }}>
+            <button onClick={openCalendly} aria-label="Réserver un rendez-vous" className="btn-dark" style={{ padding: '0.6rem 1.5rem', border: 'none', cursor: 'pointer' }}>
               Réserver
             </button>
           )}
@@ -122,6 +122,8 @@ export default function Navbar() {
           {isMobile && (
             <button
               onClick={() => setOpen(!open)}
+              aria-label={open ? 'Fermer le menu' : 'Ouvrir le menu'}
+              aria-expanded={open}
               style={{
                 background: 'none', border: 'none', cursor: 'pointer',
                 color: hamburgerColor,
@@ -205,9 +207,9 @@ export default function Navbar() {
               style={{ position: 'absolute', bottom: '2.5rem', display: 'flex', alignItems: 'center', gap: '1.75rem' }}
             >
               {[
-                { href: 'https://www.instagram.com/niame___/',      icon: <InstagramIcon size={18} /> },
-                { href: 'https://www.snapchat.com/add/niame_iss',   icon: <SnapchatIcon  size={22} /> },
-                { href: 'https://www.tiktok.com/@django94200',      icon: <TikTokIcon    size={18} /> },
+                { href: INSTAGRAM_URL, icon: <InstagramIcon size={18} /> },
+                { href: SNAPCHAT_URL,  icon: <SnapchatIcon  size={22} /> },
+                { href: TIKTOK_URL,    icon: <TikTokIcon    size={18} /> },
               ].map(({ href, icon }) => (
                 <a key={href} href={href} target="_blank" rel="noopener noreferrer"
                   style={{ color: 'rgba(255,255,255,0.3)', transition: 'color 0.3s', textDecoration: 'none' }}

@@ -1,7 +1,4 @@
 import { useEffect, useRef, useState, lazy, Suspense } from 'react'
-import FloatingParticles from './FloatingParticles'
-
-const ContactBg3D = lazy(() => import('./ContactBg3D'))
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { MapPin, X, CalendarDays, Clock } from 'lucide-react'
@@ -9,15 +6,19 @@ import { AnimatePresence, motion } from 'motion/react'
 import SplitType from 'split-type'
 import { openCalendly } from '../utils/calendly'
 import { InstagramIcon, SnapchatIcon, TikTokIcon } from '../icons/SocialIcons'
+import FloatingParticles from './FloatingParticles'
+import { INSTAGRAM_URL, SNAPCHAT_URL, TIKTOK_URL } from '../constants/socialLinks'
+
+const ContactBg3D = lazy(() => import('./ContactBg3D'))
 
 gsap.registerPlugin(ScrollTrigger)
 
 // ── Static data ──────────────────────────────────────────────────────────────
 
 const SOCIAL_LINKS = [
-  { platform: 'Instagram', href: 'https://www.instagram.com/niame___/',    bg: 'linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888)', color: '#fff',    handle: '@niame___',    sub: 'Créneaux en story',   Icon: InstagramIcon },
-  { platform: 'Snapchat',  href: 'https://www.snapchat.com/add/niame_iss', bg: '#FFFC00',                                                                color: '#0a0a0a', handle: '@niame_iss',    sub: 'Créneaux en story',  Icon: SnapchatIcon  },
-  { platform: 'TikTok',    href: 'https://www.tiktok.com/@django94200',    bg: '#010101',                                                                color: '#fff',    handle: '@django94200', sub: 'Vidéos & coulisses', Icon: TikTokIcon    },
+  { platform: 'Instagram', href: INSTAGRAM_URL, bg: 'linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888)', color: '#fff',    handle: '@niame___',    sub: 'Créneaux en story',   Icon: InstagramIcon },
+  { platform: 'Snapchat',  href: SNAPCHAT_URL,  bg: '#FFFC00',                                                              color: '#0a0a0a', handle: '@niame_iss',    sub: 'Créneaux en story',  Icon: SnapchatIcon  },
+  { platform: 'TikTok',    href: TIKTOK_URL,    bg: '#010101',                                                              color: '#fff',    handle: '@django94200', sub: 'Vidéos & coulisses', Icon: TikTokIcon    },
 ]
 
 const TRANSPORT = [

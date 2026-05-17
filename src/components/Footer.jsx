@@ -1,9 +1,10 @@
 import { InstagramIcon, SnapchatIcon, TikTokIcon } from '../icons/SocialIcons'
+import { INSTAGRAM_URL, SNAPCHAT_URL, TIKTOK_URL } from '../constants/socialLinks'
 
 const SOCIAL_LINKS = [
-  { href: 'https://www.instagram.com/niame___/',    Icon: InstagramIcon },
-  { href: 'https://www.snapchat.com/add/niame_iss', Icon: SnapchatIcon  },
-  { href: 'https://www.tiktok.com/@django94200',    Icon: TikTokIcon    },
+  { href: INSTAGRAM_URL, Icon: InstagramIcon },
+  { href: SNAPCHAT_URL,  Icon: SnapchatIcon  },
+  { href: TIKTOK_URL,    Icon: TikTokIcon    },
 ]
 
 const linkStyle = { color: 'rgba(255,255,255,0.25)', transition: 'color 0.3s', textDecoration: 'none' }

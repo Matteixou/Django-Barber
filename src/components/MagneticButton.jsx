@@ -24,6 +24,7 @@ export default function MagneticButton({ children, strength = 0.38 }) {
     return () => {
       el.removeEventListener('mousemove', onMove)
       el.removeEventListener('mouseleave', onLeave)
+      gsap.killTweensOf(el)
     }
   }, [strength])
 

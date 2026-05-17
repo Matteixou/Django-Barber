@@ -5,6 +5,7 @@ import { X, ArrowRight } from 'lucide-react'
 import { AnimatePresence, motion } from 'motion/react'
 import SplitType from 'split-type'
 import { InstagramIcon, SnapchatIcon, TikTokIcon } from '../icons/SocialIcons'
+import { INSTAGRAM_URL, SNAPCHAT_URL, TIKTOK_URL } from '../constants/socialLinks'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -21,21 +22,21 @@ const photos = [
 
 const socialLinks = [
   {
-    href: 'https://www.instagram.com/niame___/',
+    href: INSTAGRAM_URL,
     style: { background: 'linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888)', color: '#fff' },
     Icon: InstagramIcon,
     name: 'Instagram',
     handle: '@niame___',
   },
   {
-    href: 'https://www.snapchat.com/add/niame_iss',
+    href: SNAPCHAT_URL,
     style: { background: '#FFFC00', color: '#0a0a0a' },
     Icon: SnapchatIcon,
     name: 'Snapchat',
     handle: '@niame_iss',
   },
   {
-    href: 'https://www.tiktok.com/@django94200',
+    href: TIKTOK_URL,
     style: { background: '#010101', color: '#fff' },
     Icon: TikTokIcon,
     name: 'TikTok',
@@ -54,6 +55,14 @@ export default function Gallery() {
   const gridRef    = useRef(null)
   const [selected,   setSelected]   = useState(null)
   const [showSocial, setShowSocial] = useState(false)
+
+  useEffect(() => {
+    const onKey = (e) => {
+      if (e.key === 'Escape') { setSelected(null); setShowSocial(false) }
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [])
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -115,6 +124,7 @@ export default function Gallery() {
         <div style={{ display: 'flex', justifyContent: 'center', marginTop: '2.5rem' }}>
           <button
             onClick={() => setShowSocial(true)}
+            aria-label="Voir plus de réalisations sur les réseaux sociaux"
             style={{
               display: 'inline-flex', alignItems: 'center', gap: '0.6rem',
               background: '#0a0a0a', color: '#fff',
@@ -150,6 +160,7 @@ export default function Gallery() {
             >
               <button
                 onClick={() => setShowSocial(false)}
+                aria-label="Fermer"
                 style={{ position: 'absolute', top: '1rem', right: '1rem', width: '36px', height: '36px', borderRadius: '50%', background: '#f5f5f5', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
               >
                 <X size={16} />
@@ -197,6 +208,7 @@ export default function Gallery() {
           >
             <button
               onClick={() => setSelected(null)}
+              aria-label="Fermer la photo"
               style={{ position: 'absolute', top: '1.25rem', right: '1.25rem', width: '40px', height: '40px', borderRadius: '50%', background: '#fff', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
             >
               <X size={18} />

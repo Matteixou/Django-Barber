@@ -58,6 +58,7 @@ export default function Cursor() {
       cancelAnimationFrame(rafId)
       links.forEach(el  => { el.removeEventListener('mouseenter', onEnterLink); el.removeEventListener('mouseleave', onLeaveLink) })
       images.forEach(el => { el.removeEventListener('mouseenter', onEnterImg);  el.removeEventListener('mouseleave', onLeaveImg) })
+      gsap.killTweensOf([dotRef.current, ringRef.current])
     }
   }, [])
 
