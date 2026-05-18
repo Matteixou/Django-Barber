@@ -90,14 +90,14 @@ export default function Cursor() {
         width: '7px', height: '7px', borderRadius: '50%',
         background: '#fff', pointerEvents: 'none',
         mixBlendMode: 'difference',
-        willChange: 'transform',
+        willChange: 'transform', opacity: 0,
       }} />
       <div ref={ringRef} style={{
         position: 'fixed', top: 0, left: 0, zIndex: 9998,
         width: '34px', height: '34px', borderRadius: '50%',
         border: '1.5px solid #fff', pointerEvents: 'none',
         mixBlendMode: 'difference',
-        willChange: 'transform',
+        willChange: 'transform', opacity: 0,
       }} />
     </>
   )
