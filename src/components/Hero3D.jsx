@@ -17,7 +17,6 @@ export default function Hero3D() {
   }, [])
 
   useEffect(() => {
-    if (!isAndroid) return
     const el = wrapRef.current
     if (!el) return
     const observer = new IntersectionObserver(
@@ -32,7 +31,7 @@ export default function Hero3D() {
     <div ref={wrapRef} style={{ width: '100%', height: '100%' }}>
       <Canvas
         key={canvasKey}
-        frameloop={isAndroid ? frameloop : 'always'}
+        frameloop={frameloop}
         camera={{ position: [0, 0, 7], fov: 38 }}
         gl={{
           antialias: !isAndroid,
