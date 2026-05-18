@@ -1,6 +1,7 @@
 import { useRef, useMemo, useEffect } from 'react'
 import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
+import { isAndroid } from '../utils/deviceDetect'
 
 function useStripeTexture() {
   return useMemo(() => {
@@ -61,25 +62,25 @@ function BarberPole() {
 
       {/* ══ Top dome ══ */}
       <mesh position={[0, 1.44, 0]}>
-        <sphereGeometry args={[0.52, 32, 32, 0, Math.PI * 2, 0, Math.PI * 0.52]} />
+        <sphereGeometry args={[0.52, isAndroid ? 16 : 32, isAndroid ? 16 : 32, 0, Math.PI * 2, 0, Math.PI * 0.52]} />
         <meshPhysicalMaterial color="#cdd2da" roughness={0.22} metalness={0.70} envMapIntensity={2.2} />
       </mesh>
 
       {/* Top wide cap ring */}
       <mesh position={[0, 1.36, 0]}>
-        <cylinderGeometry args={[0.50, 0.48, 0.14, 32]} />
+        <cylinderGeometry args={[0.50, 0.48, 0.14, isAndroid ? 16 : 32]} />
         <meshPhysicalMaterial color="#9aa0ab" roughness={0.15} metalness={0.85} envMapIntensity={2.5} />
       </mesh>
 
       {/* Top narrow separator */}
       <mesh position={[0, 1.22, 0]}>
-        <cylinderGeometry args={[0.43, 0.43, 0.06, 32]} />
+        <cylinderGeometry args={[0.43, 0.43, 0.06, isAndroid ? 16 : 32]} />
         <meshPhysicalMaterial color="#7e858f" roughness={0.12} metalness={0.90} envMapIntensity={2.8} />
       </mesh>
 
       {/* ══ Rotating stripe cylinder ══ */}
       <mesh ref={cylinderRef}>
-        <cylinderGeometry args={[0.40, 0.40, 2.40, 48, 1, false]} />
+        <cylinderGeometry args={[0.40, 0.40, 2.40, isAndroid ? 24 : 48, 1, false]} />
         <meshPhysicalMaterial map={stripeTexture} roughness={0.28} metalness={0.04} envMapIntensity={0.6} />
       </mesh>
 
@@ -97,19 +98,19 @@ function BarberPole() {
 
       {/* ══ Bottom narrow separator ══ */}
       <mesh position={[0, -1.22, 0]}>
-        <cylinderGeometry args={[0.43, 0.43, 0.06, 32]} />
+        <cylinderGeometry args={[0.43, 0.43, 0.06, isAndroid ? 16 : 32]} />
         <meshPhysicalMaterial color="#7e858f" roughness={0.12} metalness={0.90} envMapIntensity={2.8} />
       </mesh>
 
       {/* Bottom wide cap ring */}
       <mesh position={[0, -1.36, 0]}>
-        <cylinderGeometry args={[0.48, 0.50, 0.14, 32]} />
+        <cylinderGeometry args={[0.48, 0.50, 0.14, isAndroid ? 16 : 32]} />
         <meshPhysicalMaterial color="#9aa0ab" roughness={0.15} metalness={0.85} envMapIntensity={2.5} />
       </mesh>
 
       {/* ══ Bottom dome (flipped) ══ */}
       <mesh position={[0, -1.44, 0]} rotation={[Math.PI, 0, 0]}>
-        <sphereGeometry args={[0.52, 32, 32, 0, Math.PI * 2, 0, Math.PI * 0.52]} />
+        <sphereGeometry args={[0.52, isAndroid ? 16 : 32, isAndroid ? 16 : 32, 0, Math.PI * 2, 0, Math.PI * 0.52]} />
         <meshPhysicalMaterial color="#cdd2da" roughness={0.22} metalness={0.70} envMapIntensity={2.2} />
       </mesh>
 
