@@ -1,15 +1,31 @@
-import { Suspense } from 'react'
+import { Suspense, useState, useCallback } from 'react'
 import { Canvas } from '@react-three/fiber'
 import { Environment } from '@react-three/drei'
 import Clipper3D from './Clipper3D'
 import { isAndroid } from '../utils/deviceDetect'
 
 export default function Hero3D() {
+  const [canvasKey, setCanvasKey] = useState(0)
+
+  const handleCreated = useCallback(({ gl }) => {
+    gl.domElement.addEventListener('webglcontextlost', (e) => {
+      e.preventDefault()
+      setTimeout(() => setCanvasKey(k => k + 1), 500)
+    })
+  }, [])
+
   return (
     <Canvas
+      key={canvasKey}
       camera={{ position: [0, 0, 7], fov: 38 }}
-      gl={{ antialias: !isAndroid, alpha: true, toneMapping: 3 }}
+      gl={{
+        antialias: !isAndroid,
+        alpha: true,
+        toneMapping: 3,
+        powerPreference: isAndroid ? 'low-power' : 'high-performance',
+      }}
       dpr={isAndroid ? [1, 1.5] : undefined}
+      onCreated={handleCreated}
     >
       <Suspense fallback={null}>
         <ambientLight intensity={0.3} />

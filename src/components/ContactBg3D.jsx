@@ -1,9 +1,11 @@
-import { Suspense, useMemo } from 'react'
+import { Suspense, useMemo, useState, useCallback } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
 import { Environment } from '@react-three/drei'
 import { useRef } from 'react'
 import * as THREE from 'three'
 import { isAndroid } from '../utils/deviceDetect'
+
+const Mat = isAndroid ? 'meshStandardMaterial' : 'meshPhysicalMaterial'
 
 function useStripeTexture() {
   return useMemo(() => {
@@ -63,53 +65,69 @@ function FloatingPole() {
       {/* Top dome */}
       <mesh position={[0, 1.44, 0]}>
         <sphereGeometry args={[0.52, seg, seg, 0, Math.PI * 2, 0, Math.PI * 0.52]} />
-        <meshPhysicalMaterial color="#cdd2da" roughness={0.22} metalness={0.70} envMapIntensity={2.2} />
+        <Mat color="#cdd2da" roughness={0.22} metalness={0.70} envMapIntensity={2.2} />
       </mesh>
       <mesh position={[0, 1.36, 0]}>
         <cylinderGeometry args={[0.50, 0.48, 0.14, seg]} />
-        <meshPhysicalMaterial color="#9aa0ab" roughness={0.15} metalness={0.85} envMapIntensity={2.5} />
+        <Mat color="#9aa0ab" roughness={0.15} metalness={0.85} envMapIntensity={2.5} />
       </mesh>
       <mesh position={[0, 1.22, 0]}>
         <cylinderGeometry args={[0.43, 0.43, 0.06, seg]} />
-        <meshPhysicalMaterial color="#7e858f" roughness={0.12} metalness={0.90} envMapIntensity={2.8} />
+        <Mat color="#7e858f" roughness={0.12} metalness={0.90} envMapIntensity={2.8} />
       </mesh>
       {/* Rotating stripe cylinder */}
       <mesh ref={cylinderRef}>
         <cylinderGeometry args={[0.40, 0.40, 2.40, isAndroid ? 24 : 48, 1, false]} />
-        <meshPhysicalMaterial map={stripeTexture} roughness={0.28} metalness={0.04} envMapIntensity={0.6} />
+        <Mat map={stripeTexture} roughness={0.28} metalness={0.04} envMapIntensity={0.6} />
       </mesh>
       {/* Glass panels */}
       <mesh position={[-0.42, 0, 0]}>
         <boxGeometry args={[0.045, 2.40, 0.12]} />
-        <meshPhysicalMaterial color="#a8ddd6" roughness={0.04} metalness={0} transparent opacity={0.55} envMapIntensity={1.8} />
+        <Mat color="#a8ddd6" roughness={0.04} metalness={0} transparent opacity={0.55} envMapIntensity={1.8} />
       </mesh>
       <mesh position={[0.42, 0, 0]}>
         <boxGeometry args={[0.045, 2.40, 0.12]} />
-        <meshPhysicalMaterial color="#a8ddd6" roughness={0.04} metalness={0} transparent opacity={0.55} envMapIntensity={1.8} />
+        <Mat color="#a8ddd6" roughness={0.04} metalness={0} transparent opacity={0.55} envMapIntensity={1.8} />
       </mesh>
       <mesh position={[0, -1.22, 0]}>
         <cylinderGeometry args={[0.43, 0.43, 0.06, seg]} />
-        <meshPhysicalMaterial color="#7e858f" roughness={0.12} metalness={0.90} envMapIntensity={2.8} />
+        <Mat color="#7e858f" roughness={0.12} metalness={0.90} envMapIntensity={2.8} />
       </mesh>
       <mesh position={[0, -1.36, 0]}>
         <cylinderGeometry args={[0.48, 0.50, 0.14, seg]} />
-        <meshPhysicalMaterial color="#9aa0ab" roughness={0.15} metalness={0.85} envMapIntensity={2.5} />
+        <Mat color="#9aa0ab" roughness={0.15} metalness={0.85} envMapIntensity={2.5} />
       </mesh>
       {/* Bottom dome */}
       <mesh position={[0, -1.44, 0]} rotation={[Math.PI, 0, 0]}>
         <sphereGeometry args={[0.52, seg, seg, 0, Math.PI * 2, 0, Math.PI * 0.52]} />
-        <meshPhysicalMaterial color="#cdd2da" roughness={0.22} metalness={0.70} envMapIntensity={2.2} />
+        <Mat color="#cdd2da" roughness={0.22} metalness={0.70} envMapIntensity={2.2} />
       </mesh>
     </group>
   )
 }
 
 export default function ContactBg3D() {
+  const [canvasKey, setCanvasKey] = useState(0)
+
+  const handleCreated = useCallback(({ gl }) => {
+    gl.domElement.addEventListener('webglcontextlost', (e) => {
+      e.preventDefault()
+      setTimeout(() => setCanvasKey(k => k + 1), 500)
+    })
+  }, [])
+
   return (
     <Canvas
+      key={canvasKey}
       camera={{ position: [0, 0, 7], fov: 42 }}
-      gl={{ antialias: !isAndroid, alpha: true, toneMapping: 3 }}
+      gl={{
+        antialias: !isAndroid,
+        alpha: true,
+        toneMapping: 3,
+        powerPreference: isAndroid ? 'low-power' : 'high-performance',
+      }}
       dpr={isAndroid ? [1, 1.5] : undefined}
+      onCreated={handleCreated}
     >
       <Suspense fallback={null}>
         <ambientLight intensity={0.25} />
