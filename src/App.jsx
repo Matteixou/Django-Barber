@@ -1,5 +1,6 @@
 import './App.css'
 import { useState, lazy, Suspense } from 'react'
+import { AnimatePresence } from 'motion/react'
 import { useLenis } from './hooks/useLenis'
 import Navbar    from './components/Navbar'
 import Hero      from './components/Hero'
@@ -7,18 +8,20 @@ import Cursor    from './components/Cursor'
 import Preloader from './components/Preloader'
 import Grain     from './components/Grain'
 
-const Marquee       = lazy(() => import('./components/Marquee'))
-const About         = lazy(() => import('./components/About'))
-const Stats         = lazy(() => import('./components/Stats'))
-const Skills        = lazy(() => import('./components/Skills'))
-const Gallery       = lazy(() => import('./components/Gallery'))
-const Experience    = lazy(() => import('./components/Experience'))
-const Pricing       = lazy(() => import('./components/Pricing'))
-const Contact       = lazy(() => import('./components/Contact'))
-const Footer        = lazy(() => import('./components/Footer'))
+const Marquee        = lazy(() => import('./components/Marquee'))
+const About          = lazy(() => import('./components/About'))
+const Stats          = lazy(() => import('./components/Stats'))
+const Skills         = lazy(() => import('./components/Skills'))
+const Gallery        = lazy(() => import('./components/Gallery'))
+const Experience     = lazy(() => import('./components/Experience'))
+const Pricing        = lazy(() => import('./components/Pricing'))
+const Contact        = lazy(() => import('./components/Contact'))
+const Footer         = lazy(() => import('./components/Footer'))
+const MentionsLegales = lazy(() => import('./components/MentionsLegales'))
 
 export default function App() {
   const [ready, setReady] = useState(false)
+  const [showMentions, setShowMentions] = useState(false)
   useLenis()
 
   return (
@@ -39,9 +42,16 @@ export default function App() {
           <Experience />
           <Pricing />
           <Contact />
-          <Footer />
+          <Footer onOpenMentions={() => setShowMentions(true)} />
         </Suspense>
       </div>
+      <AnimatePresence>
+        {showMentions && (
+          <Suspense fallback={null}>
+            <MentionsLegales onClose={() => setShowMentions(false)} />
+          </Suspense>
+        )}
+      </AnimatePresence>
     </>
   )
 }
